@@ -2,7 +2,7 @@
 
 https://www.kaggle.com/competitions/store-sales-time-series-forecasting/overview
 
-In order to run code do:
+In order to run code do (I think within the venv both python3 and python work because they map to same python runtime):
 ```
 source .venv/bin/activate
 python3 explore.py
