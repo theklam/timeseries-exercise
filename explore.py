@@ -8,14 +8,16 @@ print("Number of rows and columns:", df.shape)
 print("Types of each column:\n", df.dtypes)
 print(df.head())
 
-df = df[df['store_nbr'] == 1] # filter for store 1
-print("Number of rows and columns:", df.shape)
-print(df.head())
-
+# first, filter for the last year of data
 latest_date = df['date'].max()
 one_year_ago = latest_date - pd.DateOffset(years=1)
 df = df[df['date'] >= one_year_ago]
 print("Number of rows and columns after filtering for last year:", df.shape)
+print(df.head())
+
+# next, filter for a specific store, e.g., store number 1
+df = df[df['store_nbr'] == 1] 
+print("Number of rows and columns:", df.shape)
 print(df.head())
 
 # after filtering for store 1 and last year, we check for missing dates
@@ -25,8 +27,8 @@ print("start date:", one_year_ago)
 print("end date:", latest_date)
 print("Missing dates:", missing_dates)
 
+# plot the daily transactions and a 7-day moving average
 df['transactions_7d_avg'] = df['transactions'].rolling(window=7).mean()
-
 plt.plot(df['date'], df['transactions'], label='Daily')
 plt.plot(df['date'], df['transactions_7d_avg'], label='7-day Average')
 plt.xlabel('Date')
