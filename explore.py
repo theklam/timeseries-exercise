@@ -27,12 +27,18 @@ print("start date:", one_year_ago)
 print("end date:", latest_date)
 print("Missing dates:", missing_dates)
 
-# plot the daily transactions and a 7-day moving average
+# add 7-day moving average
 df['transactions_7d_avg'] = df['transactions'].rolling(window=7).mean()
+
+# add 7-day rolling std deviation
+df['transactions_7d_std'] = df['transactions'].rolling(window=7).std()
+
 plt.plot(df['date'], df['transactions'], label='Daily')
 plt.plot(df['date'], df['transactions_7d_avg'], label='7-day Average')
+plt.plot(df['date'], df['transactions_7d_std'], label='7-day Std Dev')
 plt.xlabel('Date')
 plt.ylabel('Number of Transactions')
 plt.title('Store 1 Transactions (Past Year)')
 
+plt.legend()
 plt.show()
