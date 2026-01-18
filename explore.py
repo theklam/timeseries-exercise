@@ -33,12 +33,30 @@ df['transactions_7d_avg'] = df['transactions'].rolling(window=7).mean()
 # add 7-day rolling std deviation
 df['transactions_7d_std'] = df['transactions'].rolling(window=7).std()
 
+# compute 7 day rolling z-score
+df['transactions_7d_zscore'] = (df['transactions'] - df['transactions_7d_avg']) / df['transactions_7d_std']
+
+plt.figure()
+
 plt.plot(df['date'], df['transactions'], label='Daily')
 plt.plot(df['date'], df['transactions_7d_avg'], label='7-day Average')
-plt.plot(df['date'], df['transactions_7d_std'], label='7-day Std Dev')
+
 plt.xlabel('Date')
 plt.ylabel('Number of Transactions')
 plt.title('Store 1 Transactions (Past Year)')
+plt.legend()
+plt.show()
 
+# Z-score plot
+plt.figure()
+
+plt.plot(df['date'], df['transactions_7d_zscore'], label='7-day Z-score')
+
+plt.axhline(3, linestyle='--', label='+3 threshold')
+plt.axhline(-3, linestyle='--', label='-3 threshold')
+
+plt.xlabel('Date')
+plt.ylabel('Z-score')
+plt.title('Store 1 Rolling Z-score')
 plt.legend()
 plt.show()
